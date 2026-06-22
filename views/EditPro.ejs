@@ -1,0 +1,96 @@
+<%- include('./partials/header') %>
+
+<div class="min-h-screen bg-zinc-900 text-white flex flex-col">
+  <div class="container px-10 py-20 flex flex-grow">
+    
+    <!-- Sidebar -->
+    <div class="w-[25%] flex flex-col items-start bg-zinc-800 rounded-lg p-5 h-fit shadow-md">
+      <h3 class="text-xl font-semibold mb-4">Owner Panel</h3>
+      <div class="flex flex-col gap-3 w-full">
+        <a href="/owners/allproducts"
+           class="w-full px-4 py-2 rounded-md text-left hover:bg-zinc-700 transition text-gray-200">
+          All Products
+        </a>
+        <a href="/owners/admin"
+           class="w-full px-4 py-2 rounded-md text-left hover:bg-zinc-700 transition text-gray-200">
+          Create New Product
+        </a>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <main class="w-3/4 bg-zinc-800 text-white p-8 shadow rounded-lg ml-6">
+      <h2 class="text-2xl font-bold mb-6">Edit Product</h2>
+
+      <form autocomplete="off" action="/owners/editpro/<%= product.id %>" method="post" enctype="multipart/form-data" class="space-y-8">
+
+        <!-- Image Preview + Upload -->
+        <div>
+          <h3 class="text-lg font-semibold mb-3">Product Image</h3>
+          <div class="mb-4">
+            <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>] rounded-lg overflow-hidden mb-4">
+              <img class="h-[12rem]" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
+            </div>
+            <label class="block mb-2 font-medium">Change Product Image</label>
+            <input name="image" type="file" class="bg-zinc-700 border border-zinc-600 text-white file:bg-blue-600 file:text-white file:rounded file:px-3 file:py-1 rounded w-full">
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div>
+          <h3 class="text-lg font-semibold mb-3">Product Details</h3>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block mb-1 font-medium">Product Name</label>
+              <input required name="name" type="text" value="<%= product.name %>" placeholder="<%= product.name %>"
+                class="bg-zinc-700 border border-zinc-600 text-white p-2 rounded w-full">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Product Price</label>
+              <input required name="price" type="text" value="<%= product.price %>" placeholder="<%= product.price %>"
+                class="bg-zinc-700 border border-zinc-600 text-white p-2 rounded w-full">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Discount</label>
+              <input required name="discount" type="text" value="<%= product.discount %>" placeholder="<%= product.discount %>"
+                class="bg-zinc-700 border border-zinc-600 text-white p-2 rounded w-full">
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Details -->
+        <div>
+          <h3 class="text-lg font-semibold mb-3">Panel Details</h3>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block mb-1 font-medium">Background Color</label>
+              <input required name="bgcolor" type="text" value="<%= product.bgcolor %>" placeholder="<%= product.bgcolor %>"
+                class="bg-zinc-700 border border-zinc-600 text-white p-2 rounded w-full">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Panel Color</label>
+              <input required name="panelcolor" type="text" value="<%= product.panelcolor %>" placeholder="<%= product.panelcolor %>"
+                class="bg-zinc-700 border border-zinc-600 text-white p-2 rounded w-full">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Text Color</label>
+              <input required name="textcolor" type="text" value="<%= product.textcolor %>" placeholder="<%= product.textcolor %>"
+                class="bg-zinc-700 border border-zinc-600 text-white p-2 rounded w-full">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit + Delete Buttons -->
+        <div class="flex items-center gap-4">
+          <input class="hvr px-6 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white cursor-pointer" type="submit" value="Update Product">
+
+          <a href="/products/delete/<%= product.id %>" class="hvr px-6 py-2 rounded bg-red-500 hover:bg-red-600 text-white flex items-center gap-2">
+            <i class="fa-solid fa-trash"></i> Delete Product
+          </a>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<%- include('./partials/footer') %>

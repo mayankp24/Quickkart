@@ -1,0 +1,66 @@
+<%- include('./partials/header') %>
+    <div class="w-full h-screen flex items-start px-20 py-20">
+        <%if(success.length>0){ %>
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= success %>
+            </span>
+        </div>
+        <% } %>
+       <!-- Sidebar -->
+<div class="w-[20%] h-full bg-zinc-800 text-zinc-100 p-6 rounded-md mr-3 mt-0 shadow-md">
+    <h2 class="text-xl font-semibold mb-6">Filters</h2>
+    <div class="flex flex-col gap-3">
+        <a 
+          class="block px-3 py-2 rounded-md transition 
+            <% if(filter === 'all') { %> bg-zinc-700 text-white <% } else { %> hover:bg-zinc-700 hover:text-white <% } %>" 
+          href="/shop">
+          All Products
+        </a>
+
+        <a 
+          class="block px-3 py-2 rounded-md transition 
+            <% if(filter === 'discounted') { %> bg-zinc-700 text-white <% } else { %> hover:bg-zinc-700 hover:text-white <% } %>" 
+          href="/shop?filter=discounted">
+          Discounted Products <i class="fa-solid fa-tag"></i>
+        </a>
+    </div>
+</div>
+
+        <div class="w-[75%] flex flex-col gap-5 h-screen">
+            <div class="flex items-start gap-5 flex-wrap">
+                <% products.forEach(function(product){ %>
+                 <div class="w-60 rounded-xl overflow-hidden shadow-lg bg-white">
+  <!-- Product Image Section -->
+  <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
+    <img class="h-[10rem] object-contain" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>" alt="">
+  </div>
+
+  <!-- Product Details -->
+  <div class="bg-[<%= product.panelcolor %>] text-[<%= product.textcolor %>] px-4 py-3 flex flex-col gap-2">
+    <h3 class="font-semibold text-lg"><%= product.name %></h3>
+
+    <div class="flex justify-between items-center">
+      <!-- Price and Discount -->
+      <div class="flex flex-col">
+        <span class="text-base font-medium">₹ <%= product.price %></span>
+        <% if(product.discount > 0) { %>
+          <span class="text-xs font-bold text-black bg-green-300 rounded-full px-2 py-0.5 mt-1 w-fit">
+            -<%= ((100 * product.discount) / (product.price)).toFixed(2) %>%
+          </span>
+        <% } %>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <a href="/addtocart/<%= product._id %>" class="w-8 h-8 flex items-center justify-center bg-white rounded-full hover:bg-gray-200 transition">
+        <i class="fa-solid fa-cart-plus text-black"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+                    <% }) %>
+            </div>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
